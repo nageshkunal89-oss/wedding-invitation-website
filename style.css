@@ -1,0 +1,484 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #2b0408;
+  color: #fff;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#petals-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* --- CURTAIN OPENING ANIMATION --- */
+.curtain-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: visibility 1.2s ease;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    #3c0408 0px,
+    #63070e 25px,
+    #2a0205 50px
+  );
+  transition: transform 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+.left-curtain {
+  left: 0;
+  border-right: 3px solid #d4af37;
+}
+
+.right-curtain {
+  right: 0;
+  border-left: 3px solid #d4af37;
+}
+
+.curtain-wrapper.opened .left-curtain {
+  transform: translateX(-100%);
+}
+
+.curtain-wrapper.opened .right-curtain {
+  transform: translateX(100%);
+}
+
+.curtain-wrapper.opened {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.invite-box {
+  position: relative;
+  z-index: 102;
+  text-align: center;
+  background: rgba(43, 4, 8, 0.88);
+  border: 2px solid #d4af37;
+  padding: 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.curtain-wrapper.opened .invite-box {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.script-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  color: #f3d06b;
+}
+
+.couple-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2.8rem;
+  margin: 10px 0 25px;
+  color: #fff;
+}
+
+.sub-hint {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #d4af37;
+}
+
+/* --- BUTTONS --- */
+.gold-btn {
+  background: linear-gradient(135deg, #d4af37, #f5d77f);
+  color: #2b0408;
+  border: none;
+  padding: 12px 28px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.gold-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+.maroon-btn {
+  display: inline-block;
+  background: #4a070d;
+  color: #f5d77f;
+  border: 1px solid #d4af37;
+  padding: 10px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background: #1f0205;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  color: #d4af37;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #f3e5ab;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.nav-btn.active,
+.nav-btn:hover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.15);
+  color: #fff;
+}
+
+/* --- MULTI-PAGE SECTIONS --- */
+.pages-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  display: none;
+  flex: 1;
+  padding: 60px 8%;
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+
+.page.active-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-section {
+  background: radial-gradient(circle, #570810 0%, #240205 100%);
+}
+
+.om-symbol {
+  font-size: 2.5rem;
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+.upper-tag {
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+  color: #e6c875;
+}
+
+.main-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 4.5rem;
+  color: #f5d77f;
+  margin: 15px 0;
+}
+
+.divider {
+  width: 120px;
+  height: 2px;
+  background: #d4af37;
+  margin: 20px auto;
+}
+
+.wedding-date {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+}
+
+.wedding-city {
+  color: #d4af37;
+  margin: 8px 0 25px;
+  letter-spacing: 2px;
+}
+
+/* --- CREAM SECTIONS --- */
+.cream-section {
+  background: #fdf8eb;
+  color: #3a060b;
+}
+
+.section-heading {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+.gold-text {
+  color: #f5d77f;
+}
+
+.couple-cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.person-card {
+  max-width: 240px;
+}
+
+.avatar-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #4a070d;
+  color: #f5d77f;
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  border: 3px solid #d4af37;
+}
+
+.heart-icon {
+  font-size: 2rem;
+  color: #b31222;
+}
+
+.story-quote {
+  max-width: 650px;
+  font-style: italic;
+  margin: 20px auto;
+  color: #5c1a21;
+}
+
+/* --- DARK EVENTS & RSVP SECTIONS --- */
+.dark-section {
+  background: #36050a;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 30px 0;
+}
+
+.event-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #d4af37;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.event-card h3 {
+  font-family: 'Cinzel', serif;
+  color: #f5d77f;
+  margin-bottom: 8px;
+}
+
+/* --- VENUE & BLESSINGS --- */
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  width: 100%;
+  max-width: 850px;
+  margin-bottom: 20px;
+}
+
+.info-box {
+  background: #fff;
+  border: 1px solid #d4af37;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.crown-icon {
+  font-size: 2rem;
+  color: #b8860b;
+  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  color: #8c5a19;
+  margin-top: 12px;
+}
+
+.names {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+
+.small-line {
+  width: 60px;
+  height: 1px;
+  background: #d4af37;
+  margin: 15px auto;
+}
+
+/* --- RSVP FORM --- */
+.rsvp-card {
+  background: #240205;
+  border: 1px solid #d4af37;
+  padding: 35px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+}
+
+#rsvp-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-top: 20px;
+}
+
+#rsvp-form label {
+  font-size: 0.8rem;
+  color: #d4af37;
+  margin: 12px 0 5px;
+}
+
+#rsvp-form input[type="text"],
+#rsvp-form input[type="number"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #d4af37;
+  background: #36050a;
+  color: #fff;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.check-circle {
+  width: 55px;
+  height: 55px;
+  background: #28a745;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 20px auto 10px;
+}
+
+/* --- FOOTER --- */
+.footer {
+  background: #170103;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.footer-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem;
+  color: #f5d77f;
+}
+
+.credit {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-top: 4px;
+}
+
+.credit strong {
+  color: #d4af37;
+}
+/* --- MUSIC BUTTON --- */
+.music-btn {
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid #d4af37;
+  color: #f5d77f;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.music-btn:hover {
+  background: #d4af37;
+  color: #2b0408;
+}
